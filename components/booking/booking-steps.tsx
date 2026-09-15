@@ -17,7 +17,7 @@ export function BookingSteps() {
     return (
       <div className="flex flex-col gap-4 px-5 py-10 md:px-7">
         <p className="type-headline text-2xl">Bookings temporarily unavailable.</p>
-        <p className="text-ink-dim font-sans text-sm leading-relaxed">
+        <p className="type-body text-ink-dim">
           We can&apos;t reach our booking system right now, so we&apos;re not showing
           passes rather than risk quoting the wrong price or a pass that has
           already gone. Please try again shortly — or message us on Instagram and
@@ -30,7 +30,7 @@ export function BookingSteps() {
   return (
     <div className="px-5 py-6 md:px-7 md:py-7">
       {previewMode && (
-        <p className="border-gold/40 text-gold mb-6 border px-3.5 py-2.5 font-sans text-xs leading-relaxed">
+        <p className="border-gold/40 text-gold mb-6 border px-3.5 py-3 font-sans text-[13px] leading-relaxed">
           Preview mode — Supabase is not connected, so nothing on this screen is
           saved. Add the keys in <code>.env.local</code> to record real bookings.
         </p>
@@ -58,7 +58,7 @@ function StepIndicator({ current }: { current: (typeof ORDER)[number] }) {
           <li key={key} className="flex items-center gap-2.5">
             <span
               className={cn(
-                "flex size-6 items-center justify-center rounded-full font-sans text-[11px] transition-colors duration-200",
+                "flex size-7 items-center justify-center rounded-full font-sans text-[13px] transition-colors duration-200",
                 active && "bg-gold-hi text-bg",
                 done && "border-gold text-gold border",
                 !active && !done && "border-line text-ink-dim border",

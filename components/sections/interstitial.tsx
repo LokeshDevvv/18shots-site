@@ -38,7 +38,7 @@ export function Interstitial() {
 
             <div className="md:max-w-[15rem] md:pb-3">
               {INTERSTITIAL.lines.map((line) => (
-                <p key={line} className="text-ink-dim font-sans text-sm leading-[1.9]">
+                <p key={line} className="type-body text-ink-dim">
                   {line}
                 </p>
               ))}

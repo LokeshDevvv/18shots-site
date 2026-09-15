@@ -31,13 +31,13 @@ export function PassStep() {
               >
                 <span className="flex flex-col gap-1.5">
                   <span className="label-micro text-ink">{pass.name}</span>
-                  <span className="text-ink-dim font-sans text-xs">{pass.note}</span>
+                  <span className="type-caption text-ink-dim">{pass.note}</span>
                 </span>
                 <span className="flex items-center gap-3">
                   <span className="flex flex-col items-end">
-                    <span className="font-sans text-lg">{formatINR(pass.price)}</span>
+                    <span className="font-sans text-xl">{formatINR(pass.price)}</span>
                     {pass.strikePrice && (
-                      <span className="text-ink-dim font-sans text-xs line-through">
+                      <span className="text-ink-dim font-sans text-[13px] line-through">
                         {formatINR(pass.strikePrice)}
                       </span>
                     )}

@@ -26,12 +26,14 @@ export function HeroLockup() {
         {BRAND.eventsName} <span className="text-gold">/</span> {EVENT.edition}
       </p>
 
-      <h1 className="type-display mt-5 text-[clamp(2.75rem,11.5vw,4.5rem)] md:mt-6 md:text-[min(6.4vw,13vh)]">
+      <h1 className="type-display mt-5 text-[clamp(3.5rem,17vw,4.75rem)] md:mt-6 md:text-[min(6.4vw,13vh)]">
         <span className="sr-only">{EVENT.title.join(" ")}</span>
         {EVENT.title.map((word, i) => (
           <span key={word} className="block overflow-hidden pb-[0.04em]">
+            {/* Decorative duplicate of the sr-only title: never hit-testable,
+                so a mid-animation tap can't land on a moving glyph. */}
             <span
-              className="animate-reveal-line block"
+              className="animate-reveal-line pointer-events-none block"
               style={delay(D.line(i))}
               aria-hidden
             >
@@ -65,9 +67,9 @@ export function HeroLockup() {
         className="animate-fade-up mt-6 flex items-center justify-center gap-3 md:hidden"
         style={delay(D.meta)}
       >
-        <span className="font-sans text-sm tracking-[0.22em]">{EVENT.dateLabel}</span>
+        <span className="font-sans text-base tracking-[0.2em]">{EVENT.dateLabel}</span>
         <span className="bg-line h-4 w-px" aria-hidden />
-        <span className="font-sans text-sm tracking-[0.22em]">{EVENT.city}</span>
+        <span className="font-sans text-base tracking-[0.2em]">{EVENT.city}</span>
       </p>
 
       <div
@@ -103,7 +105,7 @@ function MetaCell({
 }) {
   return (
     <div className={className}>
-      <dt className="font-sans text-base tracking-[0.18em] lg:text-lg">{value}</dt>
+      <dt className="font-sans text-lg tracking-[0.16em] lg:text-xl">{value}</dt>
       <dd className="label-micro mt-2">{label}</dd>
     </div>
   );

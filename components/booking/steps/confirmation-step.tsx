@@ -16,7 +16,7 @@ export function ConfirmationStep() {
       <div className="flex flex-col gap-3">
         <p className="label-micro">Request received</p>
         <p className="type-display text-4xl md:text-5xl">{booking.bookingCode}</p>
-        <p className="text-ink-dim font-sans text-sm">
+        <p className="type-caption text-ink-dim">
           {booking.passName} × {booking.quantity} · {formatINR(booking.amount)}
         </p>
       </div>
@@ -36,7 +36,7 @@ export function ConfirmationStep() {
               }
               aria-hidden
             />
-            <span className={i === 0 ? "font-sans text-sm" : "text-ink-dim font-sans text-sm"}>
+            <span className={i === 0 ? "font-sans text-[var(--text-input)]" : "text-ink-dim font-sans text-[var(--text-input)]"}>
               {stage}
             </span>
             {i === 1 && <span className="label-micro text-gold ml-auto">In review</span>}
@@ -45,10 +45,10 @@ export function ConfirmationStep() {
       </ol>
 
       <div className="border-line flex flex-col gap-2 border p-4">
-        <p className="font-sans text-sm leading-relaxed">
+        <p className="type-body">
           We&apos;ll send your confirmed pass on WhatsApp once payment is verified.
         </p>
-        <p className="text-ink-dim font-sans text-xs leading-relaxed">
+        <p className="type-caption text-ink-dim">
           {EVENT.locationNote} Entry is strictly 21+ with a valid photo ID.
         </p>
       </div>

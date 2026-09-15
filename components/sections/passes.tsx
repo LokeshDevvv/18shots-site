@@ -20,15 +20,15 @@ export function PassSection() {
     <section id="passes" className="shell scroll-mt-24 pb-20 md:pb-32">
       <SectionEyebrow index="04" label="Passes" />
 
-      <h2 className="type-headline mt-10 text-[clamp(2.25rem,5.5vw,3.5rem)] md:mt-14">
+      <h2 className="type-headline mt-10 text-[clamp(2.875rem,5.5vw,3.5rem)] md:mt-14">
         Choose Your Pass.
       </h2>
-      <p className="text-ink-dim mt-4 font-sans text-sm">
+      <p className="type-body text-ink-dim mt-4">
         Limited passes. Once we&apos;re full, bookings close.
       </p>
 
       {catalogueUnavailable ? (
-        <p className="border-line mt-10 border p-6 font-sans text-sm">
+        <p className="type-body border-line mt-10 border p-6">
           Bookings are temporarily unavailable. Please check back shortly.
         </p>
       ) : (
@@ -45,7 +45,7 @@ export function PassSection() {
               )}
             >
               {pass.featured && !pass.soldOut && (
-                <span className="bg-gold-hi text-bg absolute -top-px left-7 px-3 py-1 font-sans text-[10px] tracking-[0.18em] uppercase">
+                <span className="bg-gold-hi text-bg absolute -top-px left-7 px-3.5 py-1.5 font-sans text-[var(--text-micro)] tracking-[0.14em] uppercase">
                   Most popular
                 </span>
               )}
@@ -58,14 +58,14 @@ export function PassSection() {
                     {formatINR(pass.price)}
                   </span>
                   {pass.strikePrice && (
-                    <span className="text-ink-dim font-sans text-sm line-through">
+                    <span className="text-ink-dim font-sans text-[var(--text-caption)] line-through">
                       {formatINR(pass.strikePrice)}
                     </span>
                   )}
                 </p>
 
                 {pass.note && (
-                  <p className="text-ink-dim mt-3 font-sans text-sm">{pass.note}</p>
+                  <p className="type-caption text-ink-dim mt-3">{pass.note}</p>
                 )}
               </div>
 

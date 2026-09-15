@@ -14,13 +14,13 @@ export function EventStory() {
 
       <div className="mt-10 grid grid-cols-1 gap-10 md:mt-16 md:grid-cols-12 md:gap-8">
         <div className="flex flex-col md:col-span-5 md:pt-6">
-          <h2 className="type-headline text-[clamp(2.25rem,6vw,3.75rem)]">
+          <h2 className="type-headline text-[clamp(2.875rem,6vw,3.75rem)]">
             More Than
             <br />
             Just A Party.
           </h2>
 
-          <p className="text-ink-dim mt-6 max-w-sm font-sans text-[15px] leading-[1.75]">
+          <p className="type-body text-ink-dim mt-6 max-w-sm">
             {STORY.body}
           </p>
         </div>

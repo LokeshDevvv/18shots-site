@@ -48,7 +48,7 @@ export function Field({
           "aria-describedby": messageId,
           className: cn(
             "bg-bg border-line text-ink placeholder:text-ink-dim/70 w-full border px-3.5 py-3",
-            "font-sans text-[15px] transition-colors duration-200",
+            "font-sans text-[var(--text-input)] transition-colors duration-200",
             "focus:border-gold focus:outline-none",
             "aria-[invalid=true]:border-red-500/70",
             prefix ? "rounded-r-[10px]" : "rounded-[10px]",
@@ -60,7 +60,7 @@ export function Field({
         <p
           id={messageId}
           role={error ? "alert" : undefined}
-          className={cn("font-sans text-xs", error ? "text-red-400" : "text-ink-dim")}
+          className={cn("font-sans text-[13px]", error ? "text-red-400" : "text-ink-dim")}
         >
           {error ?? hint}
         </p>

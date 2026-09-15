@@ -87,7 +87,7 @@ export function PaymentStep() {
       <div className="border-line flex items-center justify-between border p-4">
         <div className="flex flex-col gap-1">
           <span className="label-micro">Amount due</span>
-          <span className="text-ink-dim font-sans text-xs">
+          <span className="type-caption text-ink-dim">
             {booking.passName} × {booking.quantity}
           </span>
         </div>
@@ -100,7 +100,7 @@ export function PaymentStep() {
 
         <div className="border-line bg-bg flex size-44 items-center justify-center border">
           {/* TODO client: drop the UPI QR at public/media/upi-qr.png and render it here. */}
-          <p className="text-ink-dim px-6 text-center font-sans text-xs leading-relaxed">
+          <p className="type-caption text-ink-dim px-6 text-center">
             UPI QR code
             <br />
             pending from 18SHOTS
@@ -113,7 +113,7 @@ export function PaymentStep() {
             onClick={copyUpi}
             className="border-line hover:border-gold flex items-center gap-2.5 border px-4 py-2.5 transition-colors duration-200"
           >
-            <span className="font-sans text-sm">{UPI_ID}</span>
+            <span className="font-sans text-[var(--text-input)]">{UPI_ID}</span>
             {copied ? (
               <Check size={13} strokeWidth={2} className="text-gold-hi" />
             ) : (
@@ -122,7 +122,7 @@ export function PaymentStep() {
             <span className="sr-only">Copy UPI ID</span>
           </button>
         ) : (
-          <p className="text-ink-dim text-center font-sans text-xs">
+          <p className="type-caption text-ink-dim text-center">
             UPI ID pending from 18SHOTS.
           </p>
         )}
@@ -151,7 +151,7 @@ export function PaymentStep() {
 
         {proof ? (
           <div className="border-line flex items-center justify-between border px-4 py-3">
-            <span className="truncate font-sans text-sm">{proof.name}</span>
+            <span className="truncate font-sans text-[var(--text-caption)]">{proof.name}</span>
             <button
               type="button"
               onClick={() => {
@@ -171,7 +171,7 @@ export function PaymentStep() {
             className="border-line hover:border-gold text-ink-dim hover:text-ink flex items-center justify-center gap-2.5 border border-dashed px-4 py-5 transition-colors duration-200"
           >
             <ImageUp size={16} strokeWidth={1.5} />
-            <span className="font-sans text-sm">Upload screenshot</span>
+            <span className="font-sans text-[var(--text-input)]">Upload screenshot</span>
           </button>
         )}
 
@@ -184,7 +184,7 @@ export function PaymentStep() {
         />
 
         <p
-          className={proofError ? "font-sans text-xs text-red-400" : "text-ink-dim font-sans text-xs"}
+          className={proofError ? "font-sans text-[13px] text-red-400" : "text-ink-dim font-sans text-[13px]"}
           role={proofError ? "alert" : undefined}
         >
           {proofError ?? "Optional, but it gets your pass confirmed faster."}
@@ -192,7 +192,7 @@ export function PaymentStep() {
       </div>
 
       {formError && (
-        <p role="alert" className="font-sans text-sm text-red-400">
+        <p role="alert" className="font-sans text-[var(--text-caption)] text-red-400">
           {formError}
         </p>
       )}
@@ -201,7 +201,7 @@ export function PaymentStep() {
         {submitting ? "Submitting…" : "Submit payment"}
       </CtaButton>
 
-      <p className="text-ink-dim font-sans text-xs leading-relaxed">
+      <p className="text-ink-dim font-sans text-[13px] leading-relaxed">
         Your reservation stays pending until we verify this payment. Booking
         {" "}
         <span className="text-ink">{booking.bookingCode}</span> is held while we check.

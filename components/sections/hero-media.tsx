@@ -73,7 +73,7 @@ export function HeroMedia() {
             "linear-gradient(180deg, transparent 30%, rgba(5,5,5,0.42) 46%, rgba(5,5,5,0.78) 64%, rgba(5,5,5,0.95) 100%)",
         }}
       />
-      <Grain opacity={0.13} />
+      <Grain opacity={0.08} />
     </div>
   );
 }

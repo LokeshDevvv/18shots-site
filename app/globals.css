@@ -19,6 +19,15 @@
   --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 
+  /* Type scale. Mobile-first sizes — the old scale bottomed out at 10px, which
+     read as microtext on a phone, and 15px inputs make iOS Safari zoom on
+     focus. Nothing below 12px, nothing interactive below 16px. */
+  --text-micro: 0.75rem;     /* 12px — uppercase labels */
+  --text-ui: 0.875rem;       /* 14px — buttons */
+  --text-caption: 0.9375rem; /* 15px — captions, secondary */
+  --text-input: 1rem;        /* 16px — form controls, iOS zoom floor */
+  --text-body: 1.0625rem;    /* 17px — body copy, FAQ */
+
   --radius-card: 12px;
   --radius-input: 10px;
 
@@ -71,11 +80,25 @@
 
 /* Uppercase micro-label: THE EVENT / EXPERIENCE / PASSES ... */
 @utility label-micro {
-  font-size: 0.625rem;
-  line-height: 1;
-  letter-spacing: 0.18em;
+  font-size: var(--text-micro);
+  line-height: 1.1;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-ink-dim);
+}
+
+/* Body copy. */
+@utility type-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
+/* Captions and secondary lines. */
+@utility type-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  line-height: 1.6;
 }
 
 /* Display lockup: VILLA AFTER DARK — tight, all-caps, high contrast */

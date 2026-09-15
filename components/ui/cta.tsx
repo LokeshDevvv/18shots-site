@@ -14,7 +14,7 @@ type Size = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center gap-2 font-sans uppercase " +
-  "tracking-[0.14em] transition-colors duration-200 ease-[var(--ease-editorial)] " +
+  "tracking-[0.12em] transition-colors duration-200 ease-[var(--ease-editorial)] " +
   "disabled:pointer-events-none disabled:opacity-45";
 
 const variants: Record<Variant, string> = {
@@ -25,9 +25,9 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-9 px-4 text-[10px]",
-  md: "h-11 px-6 text-[11px]",
-  lg: "h-14 px-9 text-xs",
+  sm: "h-10 px-5 text-[var(--text-micro)]",
+  md: "h-12 px-6 text-[13px]",
+  lg: "h-14 px-9 text-[var(--text-ui)]",
 };
 
 export function ctaClass({

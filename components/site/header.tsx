@@ -38,7 +38,7 @@ export function SiteHeader() {
     >
       <div className="shell flex h-16 items-center justify-between md:h-20">
         <Link href="/" aria-label="18SHOTS home" onClick={() => setOpen(false)}>
-          <Logo className="text-[13px] md:text-sm" />
+          <Logo className="text-base md:text-[17px]" />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">

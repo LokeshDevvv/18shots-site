@@ -260,3 +260,32 @@ Append a line whenever a choice is made that the spec didn't dictate.
   it exists. Every nav anchor resolves — the audit asserts zero dead anchors.
 - The gallery renders separate desktop and mobile trees. The hidden one never
   loads, so the image audit counts only laid-out images.
+
+## Redesign pass (a) — type scale (15 Sep 2026)
+
+- **Named type scale in `@theme`**, so sizes stop being sprinkled per component:
+  `--text-micro` 12px, `--text-ui` 14px, `--text-caption` 15px, `--text-input`
+  16px, `--text-body` 17px. `label-micro` went 10px → 12px with tracking eased
+  to 0.16em, and `type-body` / `type-caption` utilities replace ad-hoc
+  `text-sm` / `text-xs`.
+- **Inputs are 16px.** Below that, iOS Safari zooms the page on focus — a real
+  defect mid-form, not a preference. The audit enforces it.
+- **Buttons 12/13/14px** with taller targets (h-10/h-12/h-14), up from 10/11/12.
+- **Section headings floor at 44px** on mobile (was 36px); the hero title is now
+  ~66px at 390px (was ~44px); the header wordmark is 16px (was 13px).
+- **Hero grain 13% → 8%.** It was adding dirt to an already soft image.
+- **Nothing renders below 12px anywhere**, verified by a new audit that walks
+  every laid-out element at 1440 and 390 — including the open booking form — and
+  fails if any text is under 12px or any control under 16px.
+- **Hero's decorative glyph spans are `pointer-events-none`.** They duplicate the
+  sr-only title, and during the entrance animation they briefly sit over the
+  mobile CTA's area. Measurement showed the settled layout is fine
+  (`elementFromPoint` returns the button), but there's no reason for a
+  decorative clone to be hit-testable.
+
+### Still open in this redesign
+
+Passes (b) hero + sticky mobile CTA, (c) Experience swipe reel + Details 2×2 +
+editorial pass rows, (d) Motion reveals. Two decisions outstanding: whether to
+retire Bodoni for Syne (a brand change — the didone came from the client-approved
+mockup), and where sharp photography comes from.

@@ -48,7 +48,7 @@ export function BookingShell() {
         >
           <header className="border-line flex items-start justify-between border-b px-5 py-4 md:px-7 md:py-5">
             <div>
-              <Dialog.Title className="type-headline text-xl md:text-2xl">
+              <Dialog.Title className="type-headline text-2xl md:text-3xl">
                 Book Your Pass
               </Dialog.Title>
               <p className="label-micro mt-1.5">Villa After Dark</p>

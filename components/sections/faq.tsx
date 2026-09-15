@@ -14,7 +14,7 @@ export function Faq() {
     <section id="faq" className="shell scroll-mt-24 pb-20 md:pb-32">
       <SectionEyebrow index="06" label="FAQ" />
 
-      <h2 className="type-headline mt-10 text-[clamp(2.25rem,5.5vw,3.5rem)] md:mt-14">
+      <h2 className="type-headline mt-10 text-[clamp(2.875rem,5.5vw,3.5rem)] md:mt-14">
         Common Questions.
       </h2>
 
@@ -22,15 +22,15 @@ export function Faq() {
         {answered.map((item) => (
           <details key={item.q} className="faq-row border-line group border-b">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 [&::-webkit-details-marker]:hidden">
-              <span className="font-sans text-[15px] md:text-base">{item.q}</span>
+              <span className="font-sans text-[var(--text-body)]">{item.q}</span>
               <span
-                className="text-ink-dim group-hover:text-gold-hi faq-marker shrink-0 text-lg transition-transform duration-200"
+                className="text-ink-dim group-hover:text-gold-hi faq-marker shrink-0 text-xl transition-transform duration-200"
                 aria-hidden
               >
                 +
               </span>
             </summary>
-            <p className="text-ink-dim max-w-2xl pb-6 font-sans text-sm leading-[1.85]">
+            <p className="text-ink-dim max-w-2xl pb-6 font-sans text-[var(--text-input)] leading-[1.8]">
               {item.a}
             </p>
           </details>

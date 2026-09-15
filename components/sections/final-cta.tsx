@@ -32,7 +32,7 @@ export function FinalCta() {
             ))}
           </h2>
 
-          <p className="text-ink-dim mt-5 font-sans text-sm">{FINAL_CTA.sub}</p>
+          <p className="type-body text-ink-dim mt-5">{FINAL_CTA.sub}</p>
 
           <BookingTrigger variant="solid" size="lg" className="mt-10 px-12">
             Get Your Pass →

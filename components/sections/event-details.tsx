@@ -11,7 +11,7 @@ export function EventDetails() {
     <section id="details" className="shell scroll-mt-24 py-20 md:py-32">
       <SectionEyebrow index="03" label="The Details" aside="Same energy. Different night." />
 
-      <h2 className="type-headline mt-10 text-[clamp(2.25rem,5.5vw,3.5rem)] md:mt-14">
+      <h2 className="type-headline mt-10 text-[clamp(2.875rem,5.5vw,3.5rem)] md:mt-14">
         Event
         <br />
         Details.
@@ -31,14 +31,14 @@ export function EventDetails() {
           >
             <dt className="label-micro">{item.label}</dt>
             <dd>
-              <span className="block font-sans text-lg tracking-[0.08em]">{item.value}</span>
+              <span className="block font-sans text-xl tracking-[0.06em]">{item.value}</span>
               <span className="label-micro mt-2 block">{item.note}</span>
             </dd>
           </div>
         ))}
       </dl>
 
-      <p className="text-ink-dim mt-6 max-w-md font-sans text-xs leading-relaxed">
+      <p className="type-caption text-ink-dim mt-6 max-w-md">
         {EVENT.locationNote}
       </p>
 

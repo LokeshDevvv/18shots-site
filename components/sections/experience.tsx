@@ -85,7 +85,7 @@ function Frame({
 
       <figcaption className="border-line mt-5 border-t pt-5">
         <p className="label-micro text-ink">{item.title}</p>
-        <p className="text-ink-dim mt-2 font-sans text-sm">{item.caption}</p>
+        <p className="type-caption text-ink-dim mt-2">{item.caption}</p>
       </figcaption>
     </figure>
   );

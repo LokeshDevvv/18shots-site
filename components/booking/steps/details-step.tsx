@@ -84,7 +84,7 @@ export function DetailsStep() {
             >
               <Minus size={13} strokeWidth={2} />
             </QuantityButton>
-            <span className="min-w-6 text-center font-sans text-base" aria-live="polite">
+            <span className="min-w-7 text-center font-sans text-lg" aria-live="polite">
               {quantity}
             </span>
             <QuantityButton
@@ -94,11 +94,11 @@ export function DetailsStep() {
             >
               <Plus size={13} strokeWidth={2} />
             </QuantityButton>
-            <span className="text-ink-dim font-sans text-xs">
+            <span className="text-ink-dim font-sans text-[13px]">
               × {formatINR(pass.price)}
             </span>
           </div>
-          <span className="font-sans text-lg">{formatINR(total)}</span>
+          <span className="font-sans text-xl">{formatINR(total)}</span>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ export function DetailsStep() {
       </Field>
 
       {formError && (
-        <p role="alert" className="font-sans text-sm text-red-400">
+        <p role="alert" className="font-sans text-[var(--text-caption)] text-red-400">
           {formError}
         </p>
       )}
@@ -152,7 +152,7 @@ export function DetailsStep() {
         {isSubmitting ? "Starting…" : "Continue →"}
       </CtaButton>
 
-      <p className="text-ink-dim font-sans text-xs leading-relaxed">
+      <p className="text-ink-dim font-sans text-[13px] leading-relaxed">
         Your booking is not confirmed until we verify your payment. Entry is strictly
         21+ and a valid photo ID is required at the door.
       </p>
