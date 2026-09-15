@@ -4,7 +4,7 @@ import { ScrollCue } from "@/components/sections/scroll-cue";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
+    <section id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <HeroMedia />
 
       <div className="shell relative z-30 flex flex-1 flex-col pt-24 md:pt-28">

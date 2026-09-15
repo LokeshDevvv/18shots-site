@@ -289,3 +289,24 @@ Passes (b) hero + sticky mobile CTA, (c) Experience swipe reel + Details 2×2 +
 editorial pass rows, (d) Motion reveals. Two decisions outstanding: whether to
 retire Bodoni for Syne (a brand change — the didone came from the client-approved
 mockup), and where sharp photography comes from.
+
+## Redesign pass (b) — sticky mobile CTA (15 Sep 2026)
+
+- **`components/site/sticky-cta.tsx`**: mobile-only bar that slides in once the
+  hero is fully past and retires at `04 PASSES`, where the real pass blocks take
+  over. A floating CTA competing with the thing it points at is clutter.
+- **IntersectionObserver on the two sections**, not a scroll listener, so nothing
+  runs between crossings. "Above the viewport" needs `!isIntersecting` *and* a
+  negative `boundingClientRect.top` — without the rect check a section far below
+  the fold reads identically.
+- **Hidden means unreachable**: the bar is `inert` and `aria-hidden` when off
+  screen, not merely translated away. Same mistake the mobile drawer had.
+- It also hides while the booking sheet is open, and when the catalogue is
+  unavailable — quoting "From ₹999" during an outage would be the same failure
+  the fail-closed catalogue exists to prevent. The price is read from the live
+  catalogue, never hardcoded.
+- Padded with `env(safe-area-inset-bottom)` so it clears the home indicator.
+- Nine assertions in the sticky suite: hidden over the hero, inert while hidden,
+  appears after the hero, interactive when shown, retires at the passes, stays
+  away through gallery/FAQ/footer, its button opens the sheet, hides while the
+  sheet is open, never renders on desktop.

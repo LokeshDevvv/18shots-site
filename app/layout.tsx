@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
 import { BookingProvider } from "@/components/booking/booking-provider";
 import { BookingShell } from "@/components/booking/booking-shell";
+import { StickyCta } from "@/components/site/sticky-cta";
 import { getPassCatalogue } from "@/lib/booking/passes";
 import { isSupabaseConfigured } from "@/lib/booking/env";
 import "./globals.css";
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
+          <StickyCta />
           <BookingShell />
         </BookingProvider>
       </body>
