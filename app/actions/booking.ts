@@ -4,12 +4,17 @@ import { randomInt } from "node:crypto";
 import { detailsSchema, paymentSchema } from "@/lib/booking/schema";
 import { findPass } from "@/lib/booking/passes";
 import { validateProof } from "@/lib/booking/proof";
+import { getClientKey } from "@/lib/booking/client-key";
 import { isSupabaseConfigured } from "@/lib/booking/env";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { EVENT } from "@/lib/site";
 import type { ActionResult, CreatedBooking } from "@/lib/booking/types";
 
-/** Shape returned by the create_booking RPC (migration 0003). */
+const NOT_AWAITING_PAYMENT =
+  "We couldn't find a booking waiting for payment under that reference. " +
+  "If you've already submitted it, we're on it — no need to pay twice.";
+
+/** Shape returned by the create_booking RPC (migrations 0003/0004). */
 type CreateBookingRow = {
   ok: boolean;
   message: string | null;
@@ -68,6 +73,7 @@ export async function createBooking(
       p_instagram: values.instagram ?? "",
       p_quantity: values.quantity,
       p_special_request: values.specialRequest ?? "",
+      p_client_key: await getClientKey(),
     })
     .returns<CreateBookingRow[]>()
     .single();
@@ -117,6 +123,30 @@ export async function submitPayment(
   }
 
   const supabase = createAdminClient();
+
+  // Check the booking BEFORE touching storage. Uploading first meant anyone
+  // could POST a made-up code with a 5 MB image, get "not found", and still
+  // leave the object behind — free storage for an attacker, repeatable.
+  const { data: existing } = await supabase
+    .from("bookings")
+    .select("booking_code, status, reserved_until")
+    .eq("booking_code", bookingCode)
+    .eq("status", "PENDING_PAYMENT")
+    .maybeSingle();
+
+  if (!existing) {
+    return { ok: false, error: NOT_AWAITING_PAYMENT };
+  }
+
+  if (existing.reserved_until && new Date(existing.reserved_until) < new Date()) {
+    return {
+      ok: false,
+      error:
+        "This booking's payment window has expired and the passes were released. " +
+        "Please start a new booking.",
+    };
+  }
+
   let proofUrl: string | null = null;
 
   if (checked?.ok) {
@@ -143,13 +173,10 @@ export async function submitPayment(
     return { ok: false, error: "We couldn't record your payment. Please try again." };
   }
 
+  // Still guarded: the row could have changed between the check above and this
+  // update. `.select()` matters because a zero-row update returns no error.
   if (!data || data.length !== 1) {
-    return {
-      ok: false,
-      error:
-        "We couldn't find a booking waiting for payment under that reference. " +
-        "If you've already submitted it, we're on it — no need to pay twice.",
-    };
+    return { ok: false, error: NOT_AWAITING_PAYMENT };
   }
 
   return { ok: true, data: { bookingCode } };

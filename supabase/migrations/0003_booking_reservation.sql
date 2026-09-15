@@ -59,7 +59,7 @@ create or replace function create_booking(
   p_instagram      text,
   p_quantity       integer,
   p_special_request text,
-  p_hold_minutes   integer default 30
+  p_hold_minutes   integer default 15
 )
 returns table (
   ok           boolean,
@@ -144,54 +144,103 @@ begin
 end;
 $$;
 
--- Confirming a booking converts the hold into a sale; rejecting releases it.
--- Keeps quantity_reserved/quantity_sold consistent no matter which path an
--- admin takes.
+-- Admin status changes, as an explicit state machine.
+--
+-- An unrestricted setter let a CANCELLED booking be moved to CONFIRMED, which
+-- incremented quantity_sold against a reservation that had already been
+-- released. Only the transitions below are legal; anything else is rejected
+-- without touching inventory.
+--
+--   PENDING_PAYMENT   -> PAYMENT_SUBMITTED | CANCELLED | REJECTED
+--   PAYMENT_SUBMITTED -> CONFIRMED | REJECTED | CANCELLED
+--   CONFIRMED         -> CHECKED_IN | CANCELLED        (cancel = refund path)
+--   REJECTED | CANCELLED | CHECKED_IN -> terminal
 create or replace function set_booking_status(
   p_booking_code text,
   p_status       booking_status,
   p_admin_note   text default null
 )
-returns boolean
+returns table (ok boolean, message text)
 language plpgsql
 security definer
 set search_path = public
 as $$
 declare
   v_booking bookings%rowtype;
+  v_allowed booking_status[];
 begin
   select * into v_booking from bookings where booking_code = p_booking_code for update;
   if not found then
-    return false;
+    return query select false, 'No booking with that code.';
+    return;
   end if;
 
-  if p_status = 'CONFIRMED' and v_booking.status <> 'CONFIRMED' then
+  if v_booking.status = p_status then
+    return query select true, 'No change.';
+    return;
+  end if;
+
+  v_allowed := case v_booking.status
+    when 'PENDING_PAYMENT'   then array['PAYMENT_SUBMITTED', 'CANCELLED', 'REJECTED']::booking_status[]
+    when 'PAYMENT_SUBMITTED' then array['CONFIRMED', 'REJECTED', 'CANCELLED']::booking_status[]
+    when 'CONFIRMED'         then array['CHECKED_IN', 'CANCELLED']::booking_status[]
+    else array[]::booking_status[]
+  end;
+
+  if not (p_status = any (v_allowed)) then
+    return query select false,
+      format('Cannot move a booking from %s to %s.', v_booking.status, p_status);
+    return;
+  end if;
+
+  -- Inventory effects, derived from the transition rather than the target alone.
+  if p_status = 'CONFIRMED' then
+    -- Hold becomes a sale.
     update passes
        set quantity_reserved = greatest(quantity_reserved - v_booking.quantity, 0),
            quantity_sold     = quantity_sold + v_booking.quantity
      where id = v_booking.pass_id;
 
-  elsif p_status in ('REJECTED', 'CANCELLED') and v_booking.status not in ('REJECTED', 'CANCELLED') then
+  elsif p_status in ('REJECTED', 'CANCELLED') then
     if v_booking.status = 'CONFIRMED' then
+      -- Refund: give back a sold seat.
       update passes set quantity_sold = greatest(quantity_sold - v_booking.quantity, 0)
        where id = v_booking.pass_id;
     else
+      -- Release an unpaid or unverified hold.
       update passes set quantity_reserved = greatest(quantity_reserved - v_booking.quantity, 0)
        where id = v_booking.pass_id;
     end if;
   end if;
+  -- CHECKED_IN moves nothing: the seat is already counted as sold.
 
   update bookings
      set status = p_status,
          admin_note = coalesce(p_admin_note, admin_note),
          confirmed_at = case when p_status = 'CONFIRMED' then now() else confirmed_at end,
-         reserved_until = case when p_status = 'PENDING_PAYMENT' then reserved_until else null end
+         reserved_until = null
    where id = v_booking.id;
 
-  return true;
+  return query select true, null::text;
 end;
 $$;
 
-revoke all on function create_booking(text, text, text, text, text, text, integer, text, integer) from public, anon, authenticated;
-revoke all on function set_booking_status(text, booking_status, text) from public, anon, authenticated;
-revoke all on function release_expired_reservations() from public, anon;
+-- Privileges.
+--
+-- Revoking from PUBLIC also removes the default EXECUTE that service_role was
+-- relying on, so each function the server calls has to be granted back
+-- explicitly. Without this every RPC fails with "permission denied for
+-- function". service_role bypasses RLS; it does not bypass function grants.
+revoke all on function create_booking(text, text, text, text, text, text, integer, text, integer) from public;
+revoke all on function set_booking_status(text, booking_status, text) from public;
+revoke all on function release_expired_reservations() from public;
+
+do $$
+begin
+  if exists (select 1 from pg_roles where rolname = 'service_role') then
+    grant execute on function create_booking(text, text, text, text, text, text, integer, text, integer) to service_role;
+    grant execute on function set_booking_status(text, booking_status, text) to service_role;
+    grant execute on function release_expired_reservations() to service_role;
+  end if;
+end
+$$;

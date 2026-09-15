@@ -28,6 +28,7 @@ type DraftDetails = Partial<DetailsInput>;
 
 type BookingContextValue = {
   previewMode: boolean;
+  catalogueUnavailable: boolean;
   isOpen: boolean;
   step: BookingStep;
   passes: PassOption[];
@@ -51,11 +52,14 @@ const BookingContext = createContext<BookingContextValue | null>(null);
 export function BookingProvider({
   passes,
   previewMode,
+  catalogueUnavailable = false,
   children,
 }: {
   passes: PassOption[];
   /** True while Supabase is unconfigured — nothing is persisted. */
   previewMode: boolean;
+  /** True when the live catalogue could not be read; booking is disabled. */
+  catalogueUnavailable?: boolean;
   children: ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,6 +115,7 @@ export function BookingProvider({
   const value = useMemo<BookingContextValue>(
     () => ({
       previewMode,
+      catalogueUnavailable,
       isOpen,
       step,
       passes,
@@ -130,6 +135,7 @@ export function BookingProvider({
     }),
     [
       previewMode,
+      catalogueUnavailable,
       isOpen,
       step,
       passes,

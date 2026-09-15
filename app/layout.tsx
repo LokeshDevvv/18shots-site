@@ -23,6 +23,10 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
+  // null means Supabase is configured but unreachable — the booking flow shows
+  // an unavailable state rather than quoting prices we cannot verify.
+  const passes = await getPassCatalogue();
+
   return (
     <html lang="en" className={`${fontVariables} h-full`}>
       <body className="flex min-h-full flex-col">
@@ -32,7 +36,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           /book route.
         */}
         <BookingProvider
-          passes={await getPassCatalogue()}
+          passes={passes ?? []}
+          catalogueUnavailable={passes === null}
           previewMode={!isSupabaseConfigured()}
         >
           <SiteHeader />

@@ -31,7 +31,13 @@ function fallbackCatalogue(): PassOption[] {
   }));
 }
 
-export async function getPassCatalogue(): Promise<PassOption[]> {
+/**
+ * Returns null when the catalogue can't be trusted — Supabase is configured but
+ * unreachable. Callers must show an unavailable state rather than fall back to
+ * the constants: during an outage those could advertise a stale price or a pass
+ * that is actually sold out, and we would take money for it.
+ */
+export async function getPassCatalogue(): Promise<PassOption[] | null> {
   if (!isSupabaseConfigured()) return fallbackCatalogue();
 
   const supabase = createAdminClient();
@@ -45,8 +51,9 @@ export async function getPassCatalogue(): Promise<PassOption[]> {
     .eq("active", true)
     .order("sort_order");
 
-  // A backend hiccup must not take the pass list off the page.
-  if (error || !data?.length) return fallbackCatalogue();
+  // Fail closed. Better to say "temporarily unavailable" than to sell against
+  // numbers we can't verify.
+  if (error || !data?.length) return null;
 
   return data.map((row) => {
     const meta = PRESENTATION.get(row.name.toLowerCase());
@@ -65,5 +72,6 @@ export async function getPassCatalogue(): Promise<PassOption[]> {
 }
 
 export async function findPass(key: string): Promise<PassOption | undefined> {
-  return (await getPassCatalogue()).find((p) => p.key === key);
+  const catalogue = await getPassCatalogue();
+  return catalogue?.find((p) => p.key === key);
 }

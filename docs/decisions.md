@@ -182,3 +182,51 @@ Append a line whenever a choice is made that the spec didn't dictate.
   it, a third inset and pulled up, with black space carrying the rhythm. The
   equal three-column grid was tidy and read as a template. This is a deliberate
   departure from the approved mockup, agreed in review.
+
+## Backend hardening before 03–06 (15 Sep 2026)
+
+- **RPC privileges were broken.** `revoke ... from public` also removed the
+  default EXECUTE that `service_role` relied on, so every RPC would have failed
+  with "permission denied for function" in production. `service_role` bypasses
+  RLS; it does not bypass function grants. Each function the server calls is now
+  granted back explicitly, guarded by a `pg_roles` check so the migration still
+  runs on plain Postgres. Asserted in the test suite, including that `anon`
+  cannot execute it.
+- **`set_booking_status` is now a state machine.** It previously accepted any
+  status, so a CANCELLED booking could be moved to CONFIRMED and increment
+  `quantity_sold` against a reservation that had already been released. Legal
+  moves only; anything else is refused without touching inventory. Cancelling a
+  CONFIRMED booking returns a sold seat (refund path); CHECKED_IN moves nothing.
+- **Payment proof is no longer uploaded before the booking is verified.** A made-
+  up code with a 5 MB image used to leave an orphan storage object behind. The
+  booking is checked first, and the expiry is checked too. The `.select()` guard
+  on the update stays, for the row changing in between.
+- **Hold shortened to 15 minutes** and the expiry scheduler is now configured:
+  migration 0004 registers `release_expired_reservations()` on pg_cron every five
+  minutes when the extension exists, and prints setup instructions when it
+  doesn't. Calling it at the top of `create_booking` was never enough on its own —
+  a quiet hour left stock locked.
+- **Abuse protection**: five booking attempts per client per ten minutes, and at
+  most two open unpaid holds per phone number. The client key is a salted hash of
+  the forwarded IP — spoofable, so the per-phone limit is the stricter control.
+  `booking_attempts` is pruned daily.
+- **The catalogue fails closed.** Falling back to `PASS_PREVIEW` during a Supabase
+  outage could advertise a stale price or a sold-out pass and take money for it.
+  In production an unreadable catalogue now returns null and the sheet says
+  bookings are temporarily unavailable. The constants remain the preview-mode
+  path only.
+- **Tests.** `pnpm test:sql` runs the migrations and a behaviour suite against a
+  throwaway Postgres container (`supabase/tests/`): expiry, confirm, reject,
+  illegal transitions, zero-row update, both abuse limits, grants, and five
+  concurrent callers racing for one seat. `pnpm test` covers what SQL can't —
+  that an invalid or expired booking code never creates a storage object, and
+  that the catalogue fails closed.
+
+### Still open
+
+- Presentation metadata (`display_note`, `compare_at_price`, `featured`) is not in
+  the schema and is joined from source by pass name. Fine for one event; needs
+  columns before 18SHOTS runs several.
+- The migrations have not been run against a hosted Supabase project, because
+  there isn't one. They are verified on Postgres 16 with the platform roles
+  stubbed.

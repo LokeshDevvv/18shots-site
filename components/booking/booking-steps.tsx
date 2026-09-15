@@ -11,7 +11,21 @@ const ORDER = ["details", "payment", "confirmation"] as const;
 const LABELS = { details: "Details", payment: "Payment", confirmation: "Confirm" };
 
 export function BookingSteps() {
-  const { step, previewMode } = useBooking();
+  const { step, previewMode, catalogueUnavailable } = useBooking();
+
+  if (catalogueUnavailable) {
+    return (
+      <div className="flex flex-col gap-4 px-5 py-10 md:px-7">
+        <p className="type-headline text-2xl">Bookings temporarily unavailable.</p>
+        <p className="text-ink-dim font-sans text-sm leading-relaxed">
+          We can&apos;t reach our booking system right now, so we&apos;re not showing
+          passes rather than risk quoting the wrong price or a pass that has
+          already gone. Please try again shortly — or message us on Instagram and
+          we&apos;ll sort you out.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="px-5 py-6 md:px-7 md:py-7">
