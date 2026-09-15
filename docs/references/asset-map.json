@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "desktop_primary": "/images/hero-villa-desktop.jpg",
+    "desktop_alt": "/images/hero-crowd-desktop.jpg",
+    "mobile": "/images/hero-villa-mobile.jpg"
+  },
+  "event_story": "/images/event-portrait.jpg",
+  "experience": [
+    "/images/experience-dj.jpg",
+    "/images/experience-sparklers.jpg",
+    "/images/cta-villa-entrance.jpg"
+  ],
+  "details": "/images/details-drinks.jpg",
+  "gallery": [
+    "/images/gallery-portrait.jpg",
+    "/images/gallery-pool.jpg",
+    "/images/gallery-bw-crowd.jpg",
+    "/images/gallery-palm.jpg",
+    "/images/ambient-crowd.jpg"
+  ],
+  "final_cta": "/images/ambient-pool.jpg",
+  "logo_reference_only": "/brand/18shots-logo-reference.png"
+}

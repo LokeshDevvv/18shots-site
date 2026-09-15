@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   18SHOTS design tokens — see docs/visual-reference.md
+   Raw hex values do not belong in components. Add a token here instead.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-bg: #050505;
+  --color-surface: #0d0d0d;
+  --color-surface-raised: #141210;
+  --color-ink: #f5f1e8;
+  --color-ink-dim: #8b8984;
+  --color-gold: #c89036;
+  --color-gold-hi: #e2b85c;
+  --color-line: rgba(245, 241, 232, 0.14);
+  --color-line-strong: rgba(245, 241, 232, 0.28);
+
+  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-sacramento), ui-serif, cursive;
+
+  --radius-card: 12px;
+  --radius-input: 10px;
+
+  /* motion — 150-250ms micro, 600-1000ms cinematic */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-micro: 200ms;
+  --duration-cinematic: 800ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-gold-hi);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------------
+   Recurring primitives from the mockup.
+--------------------------------------------------------------------------- */
+
+/* Uppercase micro-label: THE EVENT / EXPERIENCE / PASSES ... */
+@utility label-micro {
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-dim);
+}
+
+/* Display lockup: VILLA AFTER DARK — tight, all-caps, high contrast */
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Section headline: "More Than Just A Party." — sentence case, terminal period */
+@utility type-headline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+/* The one gold script accent. Use sparingly. */
+@utility type-script {
+  font-family: var(--font-script);
+  color: var(--color-gold-hi);
+  line-height: 1.15;
+}
+
+/* Page gutter — one definition, used by every section wrapper. */
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance motion.
+
+   Deliberately CSS, not JS: the hero headline is the LCP element, so it must
+   paint without waiting on hydration — and must still be readable if JS never
+   arrives. The prefers-reduced-motion block above collapses these to their end
+   state (animation-fill-mode: both), so nothing stays hidden.
+--------------------------------------------------------------------------- */
+
+@keyframes reveal-line {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: translateY(-3px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@utility animate-reveal-line {
+  animation: reveal-line 0.95s var(--ease-editorial) both;
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.7s var(--ease-editorial) both;
+}
+
+@utility animate-cue {
+  animation: cue-bob 2.4s ease-in-out infinite;
 }

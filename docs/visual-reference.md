@@ -127,3 +127,17 @@ caption pair, step indicator, form field, bottom sheet, marquee.
 No gold glow or bloom, no gradient buttons, no glassmorphism, no drop shadows on
 cards, no border-radius above 12px on content surfaces, no purple, no cool-toned
 imagery, no stock "AI party" photography in production.
+
+## Implementation mapping (Phase 1)
+
+| Mockup element | Where it lives |
+|---|---|
+| palette | `app/globals.css` `@theme` |
+| display / headline / script type | `.type-display` `.type-headline` `.type-script` |
+| uppercase micro-label | `.label-micro` |
+| page gutter | `.shell` |
+| ghost + solid buttons | `components/ui/cta.tsx` |
+| ticker strip | `components/site/marquee.tsx` |
+| header + mobile drawer | `components/site/header.tsx` |
+| footer | `components/site/footer.tsx` |
+| all copy + event facts | `lib/site.ts` |

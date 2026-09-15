@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // The dev badge sits exactly where the hero scroll cue does.
+  devIndicators: false,
 };
 
 export default nextConfig;
