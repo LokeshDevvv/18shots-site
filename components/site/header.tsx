@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { NAV } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { BookingTrigger } from "@/components/booking/booking-trigger";
-import { Wordmark } from "@/components/site/wordmark";
+import { Logo } from "@/components/site/logo";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +38,7 @@ export function SiteHeader() {
     >
       <div className="shell flex h-16 items-center justify-between md:h-20">
         <Link href="/" aria-label="18SHOTS home" onClick={() => setOpen(false)}>
-          <Wordmark className="text-xl md:text-2xl" />
+          <Logo className="text-[13px] md:text-sm" />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">

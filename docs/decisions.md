@@ -132,3 +132,53 @@ Append a line whenever a choice is made that the spec didn't dictate.
   as the pack delivered it. An earlier pass cropped several images chasing what
   turned out to be photographic edge glow and, in one case, a sparkler in the
   frame — reverted. Measure before cropping.
+
+## Quality pass before 03–06 (15 Sep 2026)
+
+### Backend correctness
+
+- **Inventory could oversell.** `createBooking` read remaining stock and then
+  inserted in a separate statement, so two people could both claim the last
+  pass. Replaced by the `create_booking` RPC (migration 0003): one transaction
+  that locks the pass row (`for update`), verifies availability, increments
+  `quantity_reserved`, and inserts the booking. Concurrent callers now queue at
+  the lock instead of both reading the same count.
+- **Reservations expire.** Bookings carry `reserved_until` (30 min default);
+  `release_expired_reservations()` returns lapsed holds to stock and is called at
+  the top of every booking attempt. It still needs a scheduled job (pg_cron or a
+  Supabase scheduled function) so stock frees up even when no one is booking.
+- **`set_booking_status` added** so admin confirm/reject moves the count between
+  `quantity_reserved` and `quantity_sold` correctly, whichever path is taken.
+  Phase 4 must use it rather than updating `status` directly.
+- **Payment submission could report false success.** The update filtered by code
+  and status but only checked `error`; a zero-row match returns no error, so a
+  wrong or already-submitted code advanced the UI to confirmation. Now uses
+  `.select()` and requires exactly one changed row.
+- **Payment proof is validated server-side** (`lib/booking/proof.ts`): MIME type,
+  5 MB cap, and an extension taken from an allowlist rather than the submitted
+  filename. The browser checks were a courtesy; a direct POST bypasses them.
+- **The pass catalogue reads Supabase** for price, active state and remaining
+  inventory, falling back to the constants only in preview mode or on error. The
+  schema has no column for the strike-through price, the one-line note, or which
+  pass is featured, so that presentation metadata stays in `PASS_PREVIEW` and is
+  matched by name.
+
+### Art direction
+
+- **Script face removed.** Sacramento and the hero's handwritten accent are gone;
+  the stack is Bodoni Moda + Geist. A script webfont is one of the strongest
+  tells of a generated luxury template. If the brand wants handwritten energy it
+  should be drawn artwork, not a font.
+- **Real wordmark** (`components/site/logo.tsx`): numeral in the display didone,
+  hairline gold rule, name in letterspaced grotesk. Replaces the placeholder that
+  just coloured "18" gold. The ornate crest is still needed from the client — the
+  pack's "logo reference" is a zoomed screenshot crop, not artwork.
+- **Hero title down again** to `min(6.4vw, 13vh)` with tighter spacing, so the
+  photograph carries the frame. Gold now appears only in the wordmark rule and
+  the scroll dot.
+- **01's `OUR STORY` CTA removed.** It scrolled to Experience, which isn't a
+  story; the composition reads better without it.
+- **02 rebuilt asymmetrically** — one dominant frame, a tall frame dropped below
+  it, a third inset and pulled up, with black space carrying the rhythm. The
+  equal three-column grid was tidy and read as a template. This is a deliberate
+  departure from the approved mockup, agreed in review.

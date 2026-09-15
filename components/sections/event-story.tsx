@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { STORY } from "@/lib/site";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import { CtaLink } from "@/components/ui/cta";
 
 /**
  * 01 THE EVENT — editorial two-column: statement left, portrait centre-right,
@@ -24,10 +23,6 @@ export function EventStory() {
           <p className="text-ink-dim mt-6 max-w-sm font-sans text-[15px] leading-[1.75]">
             {STORY.body}
           </p>
-
-          <CtaLink href="#experience" size="md" className="mt-9 self-start">
-            Our Story ↗
-          </CtaLink>
         </div>
 
         <div className="md:col-span-4 md:col-start-7">

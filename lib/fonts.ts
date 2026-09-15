@@ -1,11 +1,14 @@
-import { Bodoni_Moda, Geist, Sacramento } from "next/font/google";
+import { Bodoni_Moda, Geist } from "next/font/google";
 
 /**
- * Three families only. See docs/visual-reference.md § Type system.
+ * Two families. A third, handwritten face was tried and removed — a script
+ * accent is the single strongest tell of a generated luxury template, and the
+ * identity should come from the Bodoni/Geist contrast instead. If the brand
+ * needs handwritten energy it should be a drawn graphic, not a webfont.
  *
- * These are free Google stand-ins chosen to match the approved mockup. If the
- * client supplies licensed faces, swap them here with next/font/local — nothing
- * else in the codebase references a font family directly.
+ * Free Google stand-ins matching the approved mockup. If the client supplies
+ * licensed faces, swap them here with next/font/local — no component names a
+ * family directly.
  */
 
 // Display + section headlines. High-contrast didone.
@@ -22,12 +25,4 @@ export const geist = Geist({
   display: "swap",
 });
 
-// The single gold script accent. Hero only.
-export const sacramento = Sacramento({
-  variable: "--font-sacramento",
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-export const fontVariables = `${bodoni.variable} ${geist.variable} ${sacramento.variable}`;
+export const fontVariables = `${bodoni.variable} ${geist.variable}`;

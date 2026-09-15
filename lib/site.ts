@@ -21,7 +21,6 @@ export const EVENT = {
   slug: "villa-after-dark",
   title: ["VILLA", "AFTER", "DARK"],
   subtitle: "A PRIVATE NIGHTLIFE EXPERIENCE",
-  scriptAccent: "Good People Better Nights",
   // TODO client: confirm date
   date: "2026-09-19",
   dateLabel: "19 . 09 . 26",

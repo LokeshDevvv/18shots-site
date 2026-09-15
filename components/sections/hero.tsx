@@ -1,4 +1,3 @@
-import { EVENT } from "@/lib/site";
 import { HeroMedia } from "@/components/sections/hero-media";
 import { HeroLockup } from "@/components/sections/hero-lockup";
 import { ScrollCue } from "@/components/sections/scroll-cue";
@@ -22,13 +21,6 @@ export function Hero() {
         </p>
       </div>
 
-      {/* The single script accent, per docs/visual-reference.md. */}
-      <p
-        className="type-script pointer-events-none absolute top-[38%] right-[6%] z-30 hidden max-w-[7ch] rotate-[-8deg] text-right text-5xl leading-[1.05] lg:block xl:text-6xl"
-        aria-hidden
-      >
-        {EVENT.scriptAccent}
-      </p>
     </section>
   );
 }

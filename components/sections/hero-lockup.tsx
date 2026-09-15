@@ -26,7 +26,7 @@ export function HeroLockup() {
         {BRAND.eventsName} <span className="text-gold">/</span> {EVENT.edition}
       </p>
 
-      <h1 className="type-display mt-5 text-[clamp(3.25rem,13vw,5.5rem)] md:mt-7 md:text-[min(8vw,16vh)]">
+      <h1 className="type-display mt-5 text-[clamp(2.75rem,11.5vw,4.5rem)] md:mt-6 md:text-[min(6.4vw,13vh)]">
         <span className="sr-only">{EVENT.title.join(" ")}</span>
         {EVENT.title.map((word, i) => (
           <span key={word} className="block overflow-hidden pb-[0.04em]">
@@ -42,7 +42,7 @@ export function HeroLockup() {
       </h1>
 
       <p
-        className="label-micro animate-fade-up mt-5 hidden tracking-[0.3em] md:block"
+        className="label-micro animate-fade-up mt-4 hidden tracking-[0.3em] md:block"
         style={delay(D.subtitle)}
       >
         {EVENT.subtitle}
@@ -50,13 +50,13 @@ export function HeroLockup() {
 
       {/* Desktop: three-column fact row with hairline dividers. */}
       <div
-        className="border-line animate-fade-up mt-9 hidden max-w-2xl border-t pt-6 md:block"
+        className="border-line animate-fade-up mt-8 hidden max-w-xl border-t pt-5 md:block"
         style={delay(D.meta)}
       >
         <dl className="divide-line grid grid-cols-3 divide-x">
-          <MetaCell value={EVENT.dateLabel} label={EVENT.dayLabel} className="pr-8" />
-          <MetaCell value={EVENT.city} label={EVENT.venueLabel} className="px-8" />
-          <MetaCell value={EVENT.startTime} label={EVENT.timeNote} className="px-8" />
+          <MetaCell value={EVENT.dateLabel} label={EVENT.dayLabel} className="pr-7" />
+          <MetaCell value={EVENT.city} label={EVENT.venueLabel} className="px-7" />
+          <MetaCell value={EVENT.startTime} label={EVENT.timeNote} className="px-7" />
         </dl>
       </div>
 
@@ -81,7 +81,7 @@ export function HeroLockup() {
       </div>
 
       <p
-        className="label-micro animate-fade-up mt-10 hidden leading-[2] md:block"
+        className="label-micro animate-fade-up mt-8 hidden leading-[2] md:block"
         style={delay(D.tagline)}
       >
         {BRAND.tagline[0]}
@@ -103,7 +103,7 @@ function MetaCell({
 }) {
   return (
     <div className={className}>
-      <dt className="font-sans text-lg tracking-[0.18em] lg:text-xl">{value}</dt>
+      <dt className="font-sans text-base tracking-[0.18em] lg:text-lg">{value}</dt>
       <dd className="label-micro mt-2">{label}</dd>
     </div>
   );

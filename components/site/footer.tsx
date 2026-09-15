@@ -6,7 +6,7 @@ import {
 } from "@/components/site/social-icons";
 import { BRAND, EVENT, NAV } from "@/lib/site";
 import { Marquee } from "@/components/site/marquee";
-import { Wordmark } from "@/components/site/wordmark";
+import { Logo } from "@/components/site/logo";
 
 export function SiteFooter() {
   const socials = [
@@ -23,7 +23,7 @@ export function SiteFooter() {
 
       <div className="shell flex flex-col gap-10 py-12 md:flex-row md:items-start md:justify-between md:py-16">
         <div className="flex flex-col gap-4">
-          <Wordmark className="text-2xl" />
+          <Logo className="text-base" withEvents />
           <p className="label-micro leading-[1.8]">
             {BRAND.tagline[0]}
             <br />

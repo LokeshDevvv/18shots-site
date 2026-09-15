@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${fontVariables} h-full`}>
       <body className="flex min-h-full flex-col">
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           /book route.
         */}
         <BookingProvider
-          passes={getPassCatalogue()}
+          passes={await getPassCatalogue()}
           previewMode={!isSupabaseConfigured()}
         >
           <SiteHeader />
