@@ -1,5 +1,5 @@
 import { BRAND, EVENT } from "@/lib/site";
-import { CtaLink } from "@/components/ui/cta";
+import { BookingTrigger } from "@/components/booking/booking-trigger";
 import { ScrollCue } from "@/components/sections/scroll-cue";
 
 /**
@@ -26,7 +26,7 @@ export function HeroLockup() {
         {BRAND.eventsName} <span className="text-gold">/</span> {EVENT.edition}
       </p>
 
-      <h1 className="type-display mt-5 text-[clamp(3.25rem,13vw,5.5rem)] md:mt-7 md:text-[min(9.5vw,19vh)]">
+      <h1 className="type-display mt-5 text-[clamp(3.25rem,13vw,5.5rem)] md:mt-7 md:text-[min(8vw,16vh)]">
         <span className="sr-only">{EVENT.title.join(" ")}</span>
         {EVENT.title.map((word, i) => (
           <span key={word} className="block overflow-hidden pb-[0.04em]">
@@ -74,9 +74,9 @@ export function HeroLockup() {
         className="animate-fade-up mt-9 flex flex-col items-center gap-9 md:hidden"
         style={delay(D.tagline)}
       >
-        <CtaLink href="/book" variant="solid" size="lg" className="px-12">
+        <BookingTrigger variant="solid" size="lg" className="px-12">
           Get Passes →
-        </CtaLink>
+        </BookingTrigger>
         <ScrollCue />
       </div>
 

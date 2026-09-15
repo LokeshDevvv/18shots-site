@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { NAV } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { CtaLink } from "@/components/ui/cta";
+import { BookingTrigger } from "@/components/booking/booking-trigger";
 import { Wordmark } from "@/components/site/wordmark";
 
 export function SiteHeader() {
@@ -53,9 +53,9 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <CtaLink href="/book" size="sm" className="hidden md:inline-flex">
+        <BookingTrigger size="sm" className="hidden md:inline-flex">
           Get Passes
-        </CtaLink>
+        </BookingTrigger>
 
         <button
           type="button"
@@ -68,14 +68,16 @@ export function SiteHeader() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer. `inert` when closed (not just aria-hidden) so its links
+          and CTA are unreachable by keyboard and assistive tech, not merely
+          invisible. */}
       <div
         className={cn(
           "bg-bg fixed inset-x-0 top-16 bottom-0 md:hidden",
           "transition-opacity duration-300 ease-[var(--ease-editorial)]",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         )}
-        aria-hidden={!open}
+        inert={!open}
       >
         <nav className="shell flex flex-col pt-10" aria-label="Mobile">
           {NAV.map((item) => (
@@ -88,15 +90,14 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <CtaLink
-            href="/book"
+          <BookingTrigger
             variant="solid"
             size="lg"
             className="mt-10"
-            onClick={() => setOpen(false)}
+            onActivate={() => setOpen(false)}
           >
             Get Passes →
-          </CtaLink>
+          </BookingTrigger>
         </nav>
       </div>
     </header>

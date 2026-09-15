@@ -75,3 +75,37 @@ Append a line whenever a choice is made that the spec didn't dictate.
 - **`brand/18shots-logo-reference.png` was NOT used.** It isn't a logo — it's a
   heavily zoomed screenshot crop showing part of the word "Ins…" in white UI
   text. `Wordmark` stays typographic until the client sends the real crest.
+
+## Booking refactor (15 Sep 2026)
+
+- **No `/book` route — booking is in-page.** The old CTAs pointed at a route that
+  never existed and returned 404. Every entry point (header, mobile drawer, hero,
+  and future pass blocks and final CTA) now calls `open()` on one provider
+  mounted in `app/layout.tsx`. The site stays a single page at `/`.
+- **Radix Dialog, not a hand-rolled modal.** Focus trapping, focus restoration,
+  Escape, `aria-modal` and background inerting are easy to get subtly wrong;
+  12 KB is the right trade. One component renders both presentations — bottom
+  sheet under `md`, centred panel above.
+- **shadcn/ui still not installed.** Its `init` would overwrite `globals.css`
+  with a competing token set, and `@radix-ui/react-dialog` is the only primitive
+  the booking flow actually needed.
+- **State reset policy** (`booking-provider.tsx`): closing mid-flow KEEPS the
+  form, because a mis-tap on the backdrop should not cost someone their details;
+  reopening after a confirmed booking STARTS FRESH, so the next guest never lands
+  inside someone else's confirmation; `open(passKey)` always moves the selection
+  to that pass.
+- **Backdrop dismissal is guarded** from the details step onward, and while
+  submitting. Escape always closes except mid-submit. Backdrop-close stays
+  available on the first step, where nothing has been typed.
+- **Prices are read server-side** in the action, never taken from the submitted
+  form. A Server Function accepts direct POSTs, so a client-supplied price is an
+  attacker-supplied price. Both actions re-parse with the same Zod schemas.
+- **A failed proof upload does not fail the booking.** Admins can still verify by
+  UTR; losing a whole submission over an image would cost a sale.
+- **Preview mode.** With no Supabase project yet, `isSupabaseConfigured()` is
+  false: the flow runs end to end, nothing is persisted, and a banner inside the
+  sheet says so. The same code path writes real rows once the keys land.
+- **Closed mobile drawer is now `inert`**, not just `aria-hidden`. It was
+  invisible but still keyboard-focusable — found while testing the booking CTAs.
+- **Hero title reduced** to `min(8vw, 16vh)` on desktop, per the agreed
+  correction. Composition, scrims and photography are untouched.
