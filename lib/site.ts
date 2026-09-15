@@ -89,6 +89,41 @@ export const HERO_MEDIA: {
   alt: "A private villa lit for a party at night, palms strung with lights above a pool",
 };
 
+/** 01 THE EVENT — copy from the approved mockup. */
+export const STORY = {
+  eyebrow: "The Event",
+  headline: "More Than Just A Party.",
+  body: "A private villa experience built for good music, great people and unforgettable nights.",
+  keywords: ["MUSIC", "PEOPLE", "FREEDOM", "CONNECTION", "MEMORIES"],
+  image: "/images/event-portrait.jpg",
+  imageAlt: "A guest at the villa party, lit by warm light, holding a drink",
+} as const;
+
+/** 02 EXPERIENCE — image-led blocks, not feature cards. */
+export const EXPERIENCE = [
+  {
+    key: "music",
+    title: "CURATED MUSIC",
+    caption: "Deep beats. Long nights.",
+    image: "/images/experience-dj.jpg",
+    alt: "A DJ mixing at the villa, hands on the decks under warm light",
+  },
+  {
+    key: "crowd",
+    title: "SELECTED CROWD",
+    caption: "Good people. Better vibes.",
+    image: "/images/experience-sparklers.jpg",
+    alt: "Guests dancing with sparklers raised above the crowd",
+  },
+  {
+    key: "villa",
+    title: "PRIVATE VILLA",
+    caption: "Exclusive location.",
+    image: "/images/cta-villa-entrance.jpg",
+    alt: "The lit entrance of the private villa at night",
+  },
+] as const;
+
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "The Event", href: "/#event" },

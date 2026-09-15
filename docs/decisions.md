@@ -109,3 +109,26 @@ Append a line whenever a choice is made that the spec didn't dictate.
   invisible but still keyboard-focusable — found while testing the booking CTAs.
 - **Hero title reduced** to `min(8vw, 16vh)` on desktop, per the agreed
   correction. Composition, scrims and photography are untouched.
+
+## Sections 01 + 02 (15 Sep 2026)
+
+- **`SectionEyebrow`** added so the mockup's numbered markers (`01 THE EVENT` …
+  `06 FAQ`) stay consistent as sections land.
+- **01 keyword rail** is a column in the desktop gutter and a wrapped row on
+  mobile. A column of one-word lines reads badly on a phone, and the mockup's
+  mobile frame doesn't show the rail at all.
+- **`OUR STORY ↗` points at `#experience`.** There is no story page; rather than
+  repeat the `/book` mistake, it scrolls to the next section. Revisit if the
+  client wants a real story page.
+- **`VIEW GALLERY ↗` omitted for now.** The mockup places it in 02, but `#gallery`
+  doesn't exist yet and a dead control is worse than a missing one. It goes in
+  with 05 GALLERY.
+- **02 follows the mockup's three equal landscape blocks**, not the "different
+  aspect ratios" idea from the later review — the approved mockup is the contract
+  until the client changes it.
+- **Image edges: one real seam, one false alarm.** `hero-villa-desktop.jpg` has a
+  genuine generator seam down its left edge (95th-percentile luminance peaks at
+  246 against an interior of 49–77); 20px trimmed. Everything else ships exactly
+  as the pack delivered it. An earlier pass cropped several images chasing what
+  turned out to be photographic edge glow and, in one case, a sparkler in the
+  frame — reverted. Measure before cropping.
