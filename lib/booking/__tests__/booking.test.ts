@@ -36,7 +36,7 @@ vi.mock("@/lib/supabase/admin", () => ({
         then: undefined,
       });
       // `update(...).eq(...).eq(...).select(...)` resolves to the row list.
-      (chain as { select: unknown }).select = (..._a: unknown[]) =>
+      (chain as { select: unknown }).select = () =>
         table === "bookings" && state.updateRows !== null
           ? Object.assign(Promise.resolve({ data: state.updateRows, error: null }), chain)
           : Object.assign(Promise.resolve(state.passQuery), chain);

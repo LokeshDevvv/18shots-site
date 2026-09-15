@@ -230,3 +230,33 @@ Append a line whenever a choice is made that the spec didn't dictate.
 - The migrations have not been run against a hosted Supabase project, because
   there isn't one. They are verified on Postgres 16 with the platform roles
   stubbed.
+
+## Sections 03–06, interstitial and final CTA (15 Sep 2026)
+
+- **Interstitial** breaks the shell gutter deliberately — everything else is
+  measured, this runs edge to edge. Uses `hero-crowd-desktop.jpg`, by far the
+  sharpest asset in the pack (67.3 vs 8.1 for the villa hero), desaturated in
+  CSS for the monochrome treatment the mockup asks for.
+- **03** is one bordered strip of four facts with hairline dividers, plus the
+  "location released to confirmed guests" note.
+- **04** reads the same catalogue the booking sheet uses, so price and sold-out
+  state can never disagree between the page and the dialog. Each `BOOK NOW`
+  preselects that pass and skips the selection step — asserted in the browser
+  tests. A sold-out pass renders as text, not a dead button.
+- **05 is columns, not a 12-column grid.** With mixed portrait and landscape
+  crops, grid rows size to the tallest item and leave holes — the first attempt
+  read as scattered rather than composed. Three stacked columns of differing
+  width and offset pack tightly. Mobile pairs two *portraits* in its 2-up row:
+  mixing a 3:2 with a 3:4 leaves a ragged edge.
+- **Two gallery frames run desaturated** — the cool-toned pool and crowd shots
+  fought the warm palette. Alternating warm and monochrome turns that into a
+  deliberate rhythm.
+- **06 uses native `<details>`** — correct semantics, keyboard support and
+  no-JS behaviour for free; the `+` rotates in CSS on `[open]`.
+- **The refund question is hidden, not answered.** `FAQ` entries with a null
+  answer don't render, so we publish no invented policy. It appears the moment
+  18SHOTS supplies wording.
+- **`VIEW MORE` points at Instagram** and `VIEW GALLERY` at `#gallery`, now that
+  it exists. Every nav anchor resolves — the audit asserts zero dead anchors.
+- The gallery renders separate desktop and mobile trees. The hidden one never
+  loads, so the image audit counts only laid-out images.

@@ -123,6 +123,88 @@ export const EXPERIENCE = [
   },
 ] as const;
 
+/** Full-bleed interstitial between 02 and 03. */
+export const INTERSTITIAL = {
+  headline: ["IT HITS", "DIFFERENT", "HERE."],
+  lines: [
+    "Same people.",
+    "Different energy.",
+    "A night you'll talk about for a long time.",
+  ],
+  image: "/images/hero-crowd-desktop.jpg",
+  alt: "The crowd with hands raised under strung lights",
+} as const;
+
+/** 03 THE DETAILS — the four facts, nothing more. */
+export const DETAILS = [
+  { label: "Date", value: EVENT.dateLong, note: EVENT.dayLabel },
+  { label: "Location", value: EVENT.city, note: "Private villa" },
+  { label: "Time", value: EVENT.startTime, note: EVENT.timeNote },
+  { label: "Entry", value: EVENT.ageLabel, note: EVENT.ageNote },
+] as const;
+
+export const DETAILS_IMAGE = {
+  src: "/images/details-drinks.jpg",
+  alt: "Glasses raised together, lit by candlelight",
+} as const;
+
+/** 05 GALLERY. `mono` frames render desaturated, per the mockup. */
+export const GALLERY: {
+  src: string;
+  alt: string;
+  ratio: "portrait" | "landscape";
+  mono?: boolean;
+}[] = [
+  { src: "/images/gallery-portrait.jpg", alt: "A guest at the villa party", ratio: "portrait" },
+  { src: "/images/gallery-pool.jpg", alt: "The lit pool at night", ratio: "landscape", mono: true },
+  { src: "/images/gallery-bw-crowd.jpg", alt: "The crowd mid-night", ratio: "portrait", mono: true },
+  { src: "/images/gallery-palm.jpg", alt: "Palms strung with lights above the villa", ratio: "portrait" },
+  { src: "/images/ambient-crowd.jpg", alt: "Guests together on the terrace", ratio: "landscape" },
+];
+
+/**
+ * 06 FAQ.
+ *
+ * An entry with a null answer is not rendered — we do not invent policy. The
+ * refund question stays here so it appears the moment 18SHOTS supplies wording.
+ */
+export const FAQ: { q: string; a: string | null }[] = [
+  {
+    q: "Is the location private?",
+    a: "Yes. The villa address is shared only with confirmed guests, by WhatsApp, closer to the night.",
+  },
+  {
+    q: "Is my booking confirmed immediately?",
+    a: "No. Your passes are held while we verify your payment against the UTR you submit. You'll get a confirmation on WhatsApp once it clears.",
+  },
+  {
+    q: "Can I get a refund?",
+    // TODO client: supply the refund and cancellation policy. Until then this
+    // question is hidden rather than answered with something invented.
+    a: null,
+  },
+  {
+    q: "Can I transfer my pass?",
+    a: "Message us on Instagram before the event with the new guest's name and number. Transfers close once the guest list is locked on the day.",
+  },
+  {
+    q: "What ID do I need?",
+    a: "Entry is strictly 21+. Bring a government photo ID that shows your date of birth — the name should match your booking.",
+  },
+  {
+    q: "How do I receive my pass?",
+    a: "On WhatsApp, at the number you booked with, once payment is verified. Your booking code is your reference until then.",
+  },
+];
+
+/** Final CTA. */
+export const FINAL_CTA = {
+  headline: ["Ready For", "The Weekend?"],
+  sub: "Limited passes. One night. No ordinary weekend.",
+  image: "/images/ambient-pool.jpg",
+  alt: "The villa pool lit at dusk",
+} as const;
+
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "The Event", href: "/#event" },

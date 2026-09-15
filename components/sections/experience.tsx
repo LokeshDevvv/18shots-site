@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { EXPERIENCE } from "@/lib/site";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { CtaLink } from "@/components/ui/cta";
 import { cn } from "@/lib/utils";
 
 /**
@@ -45,6 +46,12 @@ export function Experience() {
           sizes="(min-width: 768px) 42vw, 100vw"
           className="md:col-span-5 md:col-start-3 md:-mt-16"
         />
+      </div>
+
+      <div className="mt-14 flex justify-end md:mt-20">
+        <CtaLink href="#gallery" size="sm">
+          View gallery ↗
+        </CtaLink>
       </div>
     </section>
   );

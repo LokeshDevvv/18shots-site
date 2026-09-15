@@ -1,18 +1,25 @@
 import { Hero } from "@/components/sections/hero";
 import { EventStory } from "@/components/sections/event-story";
 import { Experience } from "@/components/sections/experience";
+import { Interstitial } from "@/components/sections/interstitial";
+import { EventDetails } from "@/components/sections/event-details";
+import { PassSection } from "@/components/sections/passes";
+import { Gallery } from "@/components/sections/gallery";
+import { Faq } from "@/components/sections/faq";
+import { FinalCta } from "@/components/sections/final-cta";
 
-/**
- * Sections land in mockup order:
- * hero ✓ → 01 the event ✓ → 02 experience ✓ → interstitial → 03 details →
- * 04 passes → 05 gallery → 06 faq → final CTA.
- */
 export default function Home() {
   return (
     <>
       <Hero />
       <EventStory />
       <Experience />
+      <Interstitial />
+      <EventDetails />
+      <PassSection />
+      <Gallery />
+      <Faq />
+      <FinalCta />
     </>
   );
 }

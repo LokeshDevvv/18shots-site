@@ -232,3 +232,8 @@
 @utility animate-panel-out {
   animation: panel-out 180ms var(--ease-editorial);
 }
+
+/* FAQ rows: native <details>, so the marker rotates in CSS. */
+.faq-row[open] .faq-marker {
+  transform: rotate(45deg);
+}
